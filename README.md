@@ -8,6 +8,9 @@ The resulting assembly snaps inside the case halves, with the HDMI and heatsink 
 
 ![](case.png)
 
+![The final product](pikvm.jpg)
+
+
 ## Caveats
 
 * Tolerances for the snap fits were tuned for `PETG` printed with a 0.4mm nozzle at 0.2mm layer height, so your mileage may vary (see the `catch_*` modules).
