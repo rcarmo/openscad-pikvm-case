@@ -2,7 +2,7 @@ pcb_width = 30;
 pcb_length = 65 + 5;
 box_height = 10;
 radius = 3;
-thickness = 0.6; // 0.4 * 3 / 2;
+thickness = 1; // 0.4 * 3 / 2;
 $fn = 50;
 
 module main_body() {
@@ -71,15 +71,22 @@ module prism(length = 5, depth = 1) {
 }
 
 module catch_tab(width = 7, height = 8, depth = 1.2, thickness = thickness) {
-  color("red") union() {
-    translate([ thickness * 1.5, 0, 0 ])
-        cube([ width - (thickness * 3), thickness * 2.5, height ]);
-    translate([ thickness * 1.5, 0, height ])
-        prism(width - (thickness * 3), thickness * 6);
-  }
+  color("red")
+    union() {
+        translate([ thickness * 1.5, 0, 0 ])
+            cube([ width - (thickness * 3), thickness * 2.5, height ]);
+        translate([ thickness * 1.5, 0, height + thickness ])
+            intersection() {
+                translate([-width/4,0,-width/2]) {
+                    color("blue") cube([width, thickness * 5, width/2]);
+                }
+                prism(width - (thickness * 3), thickness * 6);
+            }
+    }
 }
 
 module catch_carveout(width, height, depth, thickness) {
+    color("orange")
   translate([ thickness, -thickness, 0 ]) cube(
       [ width - (thickness * 2), depth + thickness * 2, height + thickness ]);
   translate([ thickness, 0, height + 0.4 ])
@@ -87,11 +94,18 @@ module catch_carveout(width, height, depth, thickness) {
 }
 
 module catch_inset(width = 7, height = 8, depth = 1.2, thickness = thickness) {
-  color("green") {
+  //color("green") 
+  {
     difference() {
       union() {
         cube([ width, depth + thickness * 2, height ]);
-        translate([ 0, 0, height ]) prism(width, thickness * 7);
+        translate([ 0, 0, height ]) {
+            intersection() {
+            translate([0,0,-height])
+                color("blue") cube([ width, width, height + thickness ]);
+            prism(width, thickness * 8);
+            }
+        }
       }
       catch_carveout(width, height, depth, thickness);
     }
