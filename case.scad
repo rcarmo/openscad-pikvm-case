@@ -86,10 +86,10 @@ module catch_tab(width = 7, height = 8, depth = 1.2, thickness = thickness) {
 }
 
 module catch_carveout(width, height, depth, thickness) {
-    color("orange")
+    color("orange") 
   translate([ thickness, -thickness, 0 ]) cube(
       [ width - (thickness * 2), depth + thickness * 2, height + thickness ]);
-  translate([ thickness, 0, height + 0.4 ])
+  translate([ thickness, 0, height + 0.6 ])
       prism(width - (thickness * 2), thickness * 7);
 }
 
